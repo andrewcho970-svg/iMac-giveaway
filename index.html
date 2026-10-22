@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Apply for a Free iMac</title>
+<style>
+  :root {
+    --bg: linear-gradient(160deg, #fff6ec 0%, #ffe8d2 60%, #ffd9b8 100%);
+    --card: #ffffff;
+    --text: #2b211b;
+    --muted: #6b5a4e;
+    --accent: #d9480f;
+    --accent-dark: #a63a0b;
+    --border: #e6d5c5;
+    --error: #d70015;
+    --ok: #1d8a3a;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    background-attachment: fixed;
+    min-height: 100vh;
+    color: var(--text);
+    line-height: 1.5;
+  }
+  .wrap { max-width: 640px; margin: 0 auto; padding: 32px 16px 64px; }
+  header { text-align: center; margin-bottom: 24px; }
+  header h1 { font-size: 2.4rem; margin: 0 0 8px; letter-spacing: -0.02em; color: #3b2a20; }
+  header p { color: #5b4a3f; margin: 0; font-size: 1.05rem; }
+  .card {
+    background: var(--card);
+    border-radius: 18px;
+    padding: 28px;
+    box-shadow: 0 10px 30px rgba(120,70,30,.15);
+  }
+  .row { display: flex; gap: 16px; }
+  .row .field { flex: 1; }
+  .field { margin-bottom: 20px; }
+  label, legend { display: block; font-weight: 600; margin-bottom: 6px; font-size: .95rem; }
+  .req { color: var(--error); }
+  input[type=text], input[type=email], textarea {
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 1rem;
+    font-family: inherit;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: #fff;
+    color: var(--text);
+  }
+  input:focus, textarea:focus, select:focus {
+    outline: 3px solid rgba(217,72,15,.25);
+    border-color: var(--accent);
+  }
+  textarea { min-height: 140px; resize: vertical; }
+  fieldset { border: 0; padding: 0; margin: 0 0 20px; }
+  .grades { display: flex; gap: 12px; }
+  .grades label {
+    flex: 1;
+    margin: 0;
+    font-weight: 500;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+  }
+  .grades input { margin-right: 6px; }
+  .grades label:has(input:checked) { border-color: var(--accent); background: #fff0e4; color: var(--accent-dark); font-weight: 700; }
+  .hint { font-size: .85rem; color: var(--muted); margin-top: 4px; }
+  .count { text-align: right; }
+  .error-msg { color: var(--error); font-size: .85rem; margin-top: 4px; display: none; }
+  .invalid .error-msg { display: block; }
+  .invalid input[type=text], .invalid input[type=email], .invalid textarea { border-color: var(--error); }
+  .consent { display: flex; gap: 10px; align-items: flex-start; font-weight: 400; font-size: .9rem; color: var(--muted); }
+  .consent input { margin-top: 4px; }
+  button {
+    width: 100%;
+    padding: 14px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #fff;
+    background: linear-gradient(90deg, #e8590c, #d9480f);
+    border: 0;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(217,72,15,.3);
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  button:hover { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(217,72,15,.4); }
+  button:disabled { opacity: .6; cursor: not-allowed; }
+  .status { margin-top: 16px; text-align: center; font-weight: 600; display: none; }
+  .status.ok { color: var(--ok); display: block; }
+  .status.fail { color: var(--error); display: block; }
+  .hp { position: absolute; left: -9999px; height: 0; overflow: hidden; }
+  .prize { background: #fff; border-radius: 18px; padding: 24px 28px; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(120,70,30,.15); }
+  .prize h2 { margin: 0 0 8px; font-size: 1.3rem; }
+  .prize p { margin: 0 0 12px; }
+  .prize .lead { font-size: 1.02rem; }
+  .specs { margin: 0 0 14px; padding: 12px 16px 12px 36px; background: #fff3e8; border-radius: 12px; }
+  .specs li { margin: 2px 0; }
+  .who { margin: 0 0 20px; }
+  .who label { display: block; font-weight: 500; margin-bottom: 6px; cursor: pointer; }
+  .who input { margin-right: 8px; }
+  [hidden] { display: none !important; }
+  .dates {
+    display: inline-block;
+    margin-top: 14px;
+    padding: 10px 18px;
+    background: #ffffff;
+    border: 1px solid #f1c9a8;
+    color: #3b2a20;
+    border-radius: 12px;
+    font-size: .95rem;
+    line-height: 1.6;
+  }
+  .rules { margin-top: 24px; padding: 16px 20px; font-size: .9rem; color: #5b4a3f; background: rgba(255,255,255,.7); border-radius: 14px; }
+  .rules h2 { font-size: 1rem; color: #3b2a20; margin: 0 0 8px; }
+  .rules ul { margin: 0; padding-left: 20px; }
+  .rules li { margin-bottom: 6px; }
+  .rules strong { color: #3b2a20; }
+  footer { margin-top: 24px; text-align: center; font-size: .8rem; color: #7a6556; }
+  footer p { margin: 4px 0; }
+  @media (max-width: 520px) {
+    .row { flex-direction: column; gap: 0; }
+    header h1 { font-size: 1.8rem; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Apply for a Free iMac</h1>
+    <p>One free pre-owned iMac for one high school student who does not have a computer of their own.</p>
+    <div class="dates">
+      <div><strong>Apply by:</strong> November 30, 2026</div>
+      <div><strong>Student selected:</strong> December 15, 2026</div>
+    </div>
+  </header>
+
+  <section class="prize">
+    <h2>The prize</h2>
+    <p class="lead">I'm donating my personal pre-owned 2015 27" 5K Apple iMac (not a new computer) to one high school student who is financially in need.</p>
+    <ul class="specs">
+      <li><strong>Display:</strong> 27" Retina 5K</li>
+      <li><strong>Processor:</strong> 4 GHz Quad-Core Intel Core i7</li>
+      <li><strong>Graphics:</strong> AMD Radeon R9 M395 2 GB</li>
+      <li><strong>Memory:</strong> 32 GB 1867 MHz DDR3</li>
+      <li><strong>Storage:</strong> 2 TB Fusion Drive with a built-in 128 GB SSD</li>
+    </ul>
+    <p><strong>Condition:</strong> It still works perfectly with no issues. I've used it daily.</p>
+    <p><strong>Who I'm looking for:</strong> a high school student who is motivated to make the most of it, whether that's coding, design, video, music, or anything else that builds their future, and who would not otherwise be able to afford a computer. Teachers, counselors and mentors are welcome to nominate a student.</p>
+  </section>
+
+  <div class="card">
+    <form id="entryForm" novalidate>
+      <!-- Web3Forms access key (see setup notes): replace with your own -->
+      <input type="hidden" name="access_key" value="51d340d6-f7bc-4886-9584-8844cb6a18aa">
+      <input type="hidden" name="subject" value="New iMac giveaway entry">
+      <input type="hidden" name="from_name" value="iMac Giveaway">
+      <!-- spam trap: real people never fill this in -->
+      <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off">
+
+      <fieldset class="who">
+        <legend>Who is submitting this? <span class="req">*</span></legend>
+        <label><input type="radio" name="applicant_type" value="Student applying for themselves" checked> I'm the student</label>
+        <label><input type="radio" name="applicant_type" value="Teacher/counselor/mentor nominating a student"> I'm a teacher, counselor or mentor nominating a student</label>
+      </fieldset>
+
+      <div class="row">
+        <div class="field" data-field>
+          <label for="firstName">Student's first name <span class="req">*</span></label>
+          <input type="text" id="firstName" name="first_name" autocomplete="given-name" required>
+          <div class="error-msg">Please enter the student's first name.</div>
+        </div>
+        <div class="field" data-field>
+          <label for="lastName">Student's last name <span class="req">*</span></label>
+          <input type="text" id="lastName" name="last_name" autocomplete="family-name" required>
+          <div class="error-msg">Please enter the student's last name.</div>
+        </div>
+      </div>
+
+      <div class="field" data-field id="nominatorField" hidden>
+        <label for="nominator">Your name and role (teacher, counselor, mentor) <span class="req">*</span></label>
+        <input type="text" id="nominator" name="nominator_name_and_role" placeholder="e.g. Ms. Smith, school counselor">
+        <div class="error-msg">Please enter your name and role.</div>
+      </div>
+
+      <div class="field" data-field>
+        <label for="email">Email address (I'll use this to contact you about the application) <span class="req">*</span></label>
+        <input type="email" id="email" name="email" autocomplete="email" required>
+        <div class="error-msg">Please enter a valid email address.</div>
+      </div>
+
+      <fieldset data-field id="gradeField">
+        <legend>Student's grade <span class="req">*</span></legend>
+        <div class="grades">
+          <label><input type="radio" name="grade" value="10"> 10</label>
+          <label><input type="radio" name="grade" value="11"> 11</label>
+          <label><input type="radio" name="grade" value="12"> 12</label>
+        </div>
+        <div class="error-msg">Please select the student's grade.</div>
+      </fieldset>
+
+      <div class="field" data-field>
+        <label for="story">What would the student do with the iMac, and what is their situation? <span class="req">*</span></label>
+        <textarea id="story" name="story" maxlength="1500" required
+          placeholder="A short note about the student: how they would use the iMac (coding, design, video, music, schoolwork, etc.) and why a computer would make a difference. Please do not include a home address, phone number or other sensitive details."></textarea>
+        <div class="hint count"><span id="charCount">0</span> / 1500</div>
+        <div class="error-msg">Please write at least a couple of sentences (30+ characters).</div>
+      </div>
+
+      <div class="field" data-field>
+        <label class="consent">
+          <input type="checkbox" id="consent" name="consent" value="yes" required>
+          <span>I agree that these answers may be shared with the organizer (Andrew Cho) so he can review applications and select a student. I have the student's permission to apply, and if the student is under 18, a parent or guardian is aware of this application.</span>
+        </label>
+        <div class="error-msg">Please tick the box to continue.</div>
+      </div>
+
+      <button type="submit" id="submitBtn">Submit application</button>
+      <div class="status" id="status" role="status" aria-live="polite"></div>
+    </form>
+  </div>
+
+  <section class="rules">
+    <h2>Details</h2>
+    <ul>
+      <li><strong>Organizer:</strong> Andrew Cho.</li>
+      <li><strong>Who can apply:</strong> high school students in grades 10, 11 and 12 who do not have a computer of their own and could not otherwise afford one. Teachers, counselors and mentors may nominate a student. One application per student. If the student is under 18, please let a parent or guardian know about the application.</li>
+      <li><strong>Prize:</strong> one pre-owned 2015 27" 5K Apple iMac (specs above), donated by the organizer. No cash alternative.</li>
+      <li><strong>Deadline:</strong> applications must be submitted by November 30, 2026.</li>
+      <li><strong>How the student is chosen:</strong> the organizer will read the applications and choose one student, based on need and on how the student would use the iMac. The decision is final.</li>
+      <li><strong>Notification:</strong> the selected student (or their nominator) will be contacted by email on or about December 15, 2026. If there is no response in a reasonable time, another student may be chosen.</li>
+      <li><strong>Handing over the iMac:</strong> this will be arranged with the student's parent or guardian, or through the student's school, and not directly with the student alone.</li>
+      <li><strong>Your information:</strong> the details you submit are sent to the organizer by email through an online form service. They are used only to review applications and contact the selected student. They will not be sold or shared, and will be deleted after the iMac has been given away.</li>
+    </ul>
+  </section>
+
+  <footer>
+    <p>Applications close November 30, 2026. One student will be selected on December 15, 2026 and notified by email.</p>
+    <p>Please pass this along to anyone who might benefit.</p>
+    <p>This donation is not sponsored, endorsed, or administered by Apple Inc. iMac is a trademark of Apple Inc.</p>
+    <p>&copy; 2026 Andrew Cho</p>
+  </footer>
+</div>
+
+<script>
+(function () {
+  var form = document.getElementById('entryForm');
+  var statusEl = document.getElementById('status');
+  var btn = document.getElementById('submitBtn');
+  var story = document.getElementById('story');
+  var counter = document.getElementById('charCount');
+
+  // Where entries are sent. Web3Forms emails each entry to you.
+  var ENDPOINT = 'https://api.web3forms.com/submit';
+
+  story.addEventListener('input', function () { counter.textContent = story.value.length; });
+
+  var nomBox = document.getElementById('nominatorField');
+  function isNominator() {
+    var r = form.querySelector('input[name=applicant_type]:checked');
+    return r && r.value.indexOf('Teacher') === 0;
+  }
+  Array.prototype.forEach.call(form.querySelectorAll('input[name=applicant_type]'), function (r) {
+    r.addEventListener('change', function () {
+      nomBox.hidden = !isNominator();
+      if (!isNominator()) nomBox.classList.remove('invalid');
+    });
+  });
+
+  function setInvalid(el, bad) {
+    var box = el.closest('[data-field]');
+    if (box) box.classList.toggle('invalid', bad);
+  }
+
+  function validate() {
+    var ok = true;
+    var f = form.elements;
+    ['first_name', 'last_name'].forEach(function (n) {
+      var bad = !f[n].value.trim();
+      setInvalid(f[n], bad); if (bad) ok = false;
+    });
+    var emailBad = !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(f.email.value.trim());
+    setInvalid(f.email, emailBad); if (emailBad) ok = false;
+
+    var gradeBad = !form.querySelector('input[name=grade]:checked');
+    document.getElementById('gradeField').classList.toggle('invalid', gradeBad);
+    if (gradeBad) ok = false;
+
+    var storyBad = f.story.value.trim().length < 30;
+    setInvalid(f.story, storyBad); if (storyBad) ok = false;
+
+    var nomBad = isNominator() && !document.getElementById('nominator').value.trim();
+    nomBox.classList.toggle('invalid', nomBad);
+    if (nomBad) ok = false;
+
+    var consentBad = !f.consent.checked;
+    setInvalid(f.consent, consentBad); if (consentBad) ok = false;
+    return ok;
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    statusEl.className = 'status';
+    if (!validate()) {
+      var firstBad = form.querySelector('.invalid');
+      if (firstBad) firstBad.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+    btn.disabled = true;
+    btn.textContent = 'Submitting...';
+
+    fetch(ENDPOINT, {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: new FormData(form)
+    })
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      if (data.success) {
+        form.reset();
+        nomBox.hidden = true;
+        counter.textContent = '0';
+        statusEl.textContent = "Thank you! Your application has been received.";
+        statusEl.className = 'status ok';
+        btn.textContent = 'Entry submitted';
+      } else {
+        throw new Error(data.message || 'Submission failed');
+      }
+    })
+    .catch(function () {
+      statusEl.textContent = 'Something went wrong. Please try again in a moment.';
+      statusEl.className = 'status fail';
+      btn.disabled = false;
+      btn.textContent = 'Submit application';
+    });
+  });
+})();
+</script>
+</body>
+</html>
