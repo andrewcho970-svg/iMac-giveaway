@@ -113,6 +113,13 @@
   .closed p { margin: 0 0 12px; color: #40594a; font-size: 1.02rem; }
   .closed .sign { font-weight: 800; color: #1f3a2b; margin-top: 18px; }
   body.is-closed #prizeSection, body.is-closed #formCard, body.is-closed #datesBox { display: none; }
+  .share { display: flex; gap: 20px; align-items: center; margin-top: 24px; padding: 18px 20px; background: #fff; border-radius: 18px; box-shadow: 0 10px 30px rgba(30,70,45,.15); }
+  .share .qr { flex: 0 0 132px; width: 132px; }
+  .share h2 { margin: 0 0 6px; font-size: 1.1rem; color: #1f3a2b; }
+  .share p { margin: 0 0 6px; font-size: .92rem; color: #40594a; }
+  .share .url { font-weight: 800; color: #1f3a2b; word-break: break-all; }
+  body.is-closed #shareSection { display: none; }
+  @media (max-width: 520px) { .share { flex-direction: column; text-align: center; } .share .qr { flex-basis: auto; width: 150px; } }
   [hidden] { display: none !important; }
   .dates {
     display: inline-block;
@@ -242,6 +249,15 @@
       <div class="status" id="status" role="status" aria-live="polite"></div>
     </form>
   </div>
+
+  <section class="share" id="shareSection">
+    <div class="qr"><svg role="img" aria-label="QR code linking to imac-giveaway.vercel.app" style="width:100%;height:auto;display:block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 370 370" class="segno"><g transform="scale(10)"><path fill="#fff" d="M0 0h37v37h-37z"/><path class="qrline" stroke="#1f3a2b" d="M4 4.5h7m6 0h1m2 0h1m2 0h1m2 0h7m-29 1h1m5 0h1m1 0h1m5 0h3m1 0h2m2 0h1m5 0h1m-29 1h1m1 0h3m1 0h1m2 0h2m1 0h3m1 0h1m1 0h2m2 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m2 0h7m2 0h1m3 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m1 0h2m1 0h1m2 0h1m3 0h3m1 0h1m1 0h3m1 0h1m-29 1h1m5 0h1m2 0h2m2 0h1m3 0h4m1 0h1m5 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-20 1h2m1 0h3m1 0h4m-20 1h1m1 0h1m1 0h1m1 0h1m4 0h2m1 0h4m1 0h1m4 0h1m2 0h1m-24 1h2m2 0h3m3 0h2m1 0h2m1 0h4m1 0h1m2 0h1m-29 1h1m1 0h2m2 0h4m1 0h3m2 0h3m2 0h1m1 0h1m2 0h3m-29 1h1m4 0h1m1 0h1m2 0h1m4 0h1m1 0h1m1 0h1m3 0h1m3 0h1m-27 1h6m4 0h2m3 0h2m2 0h3m2 0h1m1 0h2m-29 1h5m2 0h5m1 0h1m1 0h1m1 0h1m2 0h3m2 0h1m2 0h1m-27 1h5m1 0h1m3 0h1m1 0h1m2 0h2m2 0h5m1 0h2m-29 1h2m3 0h1m1 0h1m2 0h5m1 0h3m1 0h1m1 0h2m1 0h1m1 0h1m-27 1h2m3 0h1m4 0h1m2 0h4m3 0h2m2 0h1m1 0h2m-28 1h2m6 0h1m1 0h2m1 0h1m2 0h1m2 0h3m2 0h2m1 0h1m-29 1h1m2 0h1m1 0h5m3 0h1m2 0h1m6 0h2m2 0h2m-28 1h1m1 0h2m3 0h1m2 0h1m3 0h1m1 0h3m4 0h2m1 0h1m-28 1h1m1 0h2m1 0h2m2 0h2m6 0h1m2 0h5m-17 1h1m2 0h1m1 0h1m2 0h1m2 0h2m3 0h1m1 0h3m-29 1h7m2 0h1m1 0h1m2 0h1m1 0h1m2 0h2m1 0h1m1 0h2m1 0h2m-29 1h1m5 0h1m3 0h2m1 0h3m1 0h1m2 0h1m3 0h2m-26 1h1m1 0h3m1 0h1m1 0h1m2 0h1m2 0h1m2 0h2m1 0h5m3 0h1m-29 1h1m1 0h3m1 0h1m2 0h1m1 0h1m2 0h1m1 0h1m6 0h2m1 0h3m-29 1h1m1 0h3m1 0h1m1 0h3m1 0h2m3 0h1m1 0h3m1 0h3m2 0h1m-29 1h1m5 0h1m2 0h1m1 0h2m2 0h1m1 0h1m1 0h2m6 0h1m-28 1h7m1 0h1m2 0h3m2 0h2m1 0h2m6 0h2"/></g></svg></div>
+    <div class="sharetext">
+      <h2>Know a student who could use this?</h2>
+      <p>Please share this page. Scan the QR code with a phone camera, or pass along the link:</p>
+      <p class="url">imac-giveaway.vercel.app</p>
+    </div>
+  </section>
 
   <section class="rules">
     <h2>Details</h2>
