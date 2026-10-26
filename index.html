@@ -24,7 +24,6 @@
     margin: 0;
     font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     background: var(--bg);
-    background-attachment: fixed;
     min-height: 100vh;
     color: var(--text);
     line-height: 1.5;
@@ -152,8 +151,8 @@
 
   <section class="closed" id="closedNotice" hidden>
     <h2>Applications are now closed</h2>
-    <p>Thank you to everyone who applied, and to the teachers, counselors and mentors who nominated a student. I was truly moved by how many students shared their stories.</p>
-    <p>One student will be selected on <strong>December 15, 2026</strong> and notified by email. Every application will be read with care.</p>
+    <p>Applications closed on November 30, 2026. Thank you to everyone who visited this page, shared it, or took the time to apply.</p>
+    <p>Please do not reapply or send further messages through this page.</p>
     <p>Thank you again, and I wish every student the very best.</p>
     <p class="sign">Andrew Cho</p>
   </section>
@@ -275,11 +274,11 @@
     var n = document.getElementById('closedNotice');
     if (n) n.hidden = false;
     var h = document.querySelector('header p');
-    if (h) h.textContent = 'Thank you to everyone who applied.';
+    if (h) h.textContent = 'Thank you for your interest.';
     var rules = document.querySelector('.rules');
     if (rules) rules.style.display = 'none';
     var f = document.querySelector('footer');
-    if (f) f.innerHTML = '<p>Applications closed on November 30, 2026. One student will be selected on December 15, 2026 and notified by email.</p><p>This donation is not sponsored, endorsed, or administered by Apple Inc. iMac is a trademark of Apple Inc.</p><p>&copy; 2026 Andrew Cho</p>';
+    if (f) f.innerHTML = '<p>Applications closed on November 30, 2026.</p><p>This donation is not sponsored, endorsed, or administered by Apple Inc. iMac is a trademark of Apple Inc.</p><p>&copy; 2026 Andrew Cho</p>';
   }
 })();
 (function () {
