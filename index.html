@@ -109,6 +109,11 @@
   .who { margin: 0 0 20px; }
   .who label { display: block; font-weight: 500; margin-bottom: 6px; cursor: pointer; }
   .who input { margin-right: 8px; }
+  .closed { background: #fff; border-radius: 18px; padding: 28px; margin-bottom: 20px; text-align: center; box-shadow: 0 10px 30px rgba(30,70,45,.15); }
+  .closed h2 { margin: 0 0 12px; font-size: 1.5rem; color: #1f3a2b; }
+  .closed p { margin: 0 0 12px; color: #40594a; font-size: 1.02rem; }
+  .closed .sign { font-weight: 800; color: #1f3a2b; margin-top: 18px; }
+  body.is-closed #prizeSection, body.is-closed #formCard, body.is-closed #datesBox { display: none; }
   [hidden] { display: none !important; }
   .dates {
     display: inline-block;
@@ -139,13 +144,21 @@
   <header>
     <h1>Apply for a Free iMac</h1>
     <p>One free pre-owned iMac for one high school student who does not have a computer of their own.</p>
-    <div class="dates">
+    <div class="dates" id="datesBox">
       <div><strong>Apply by:</strong> November 30, 2026</div>
       <div><strong>Student selected:</strong> December 15, 2026</div>
     </div>
   </header>
 
-  <section class="prize">
+  <section class="closed" id="closedNotice" hidden>
+    <h2>Applications are now closed</h2>
+    <p>Thank you to everyone who applied, and to the teachers, counselors and mentors who nominated a student. I was truly moved by how many students shared their stories.</p>
+    <p>One student will be selected on <strong>December 15, 2026</strong> and notified by email. Every application will be read with care.</p>
+    <p>Thank you again, and I wish every student the very best.</p>
+    <p class="sign">Andrew Cho</p>
+  </section>
+
+  <section class="prize" id="prizeSection">
     <h2>The prize</h2>
     <p class="lead">I'm donating my personal pre-owned 2015 27" 5K Apple iMac (not a new computer) to one high school student who is financially in need.</p>
     <ul class="specs">
@@ -160,7 +173,7 @@
     <p><strong>Who I'm looking for:</strong> a high school student who is motivated to make the most of it, whether that's coding, design, video, music, or anything else that builds their future, and who would not otherwise be able to afford a computer. Teachers, counselors and mentors are welcome to nominate a student.</p>
   </section>
 
-  <div class="card">
+  <div class="card" id="formCard">
     <form id="entryForm" novalidate>
       <!-- Web3Forms access key (see setup notes): replace with your own -->
       <input type="hidden" name="access_key" value="51d340d6-f7bc-4886-9584-8844cb6a18aa">
@@ -255,6 +268,21 @@
 
 <script>
 (function () {
+  // Applications close automatically at the start of December 1, 2026 (Alberta time, UTC-7).
+  var CLOSE_AT = new Date('2026-12-01T00:00:00-07:00');
+  if (new Date() >= CLOSE_AT) {
+    document.body.classList.add('is-closed');
+    var n = document.getElementById('closedNotice');
+    if (n) n.hidden = false;
+    var h = document.querySelector('header p');
+    if (h) h.textContent = 'Thank you to everyone who applied.';
+    var rules = document.querySelector('.rules');
+    if (rules) rules.style.display = 'none';
+    var f = document.querySelector('footer');
+    if (f) f.innerHTML = '<p>Applications closed on November 30, 2026. One student will be selected on December 15, 2026 and notified by email.</p><p>This donation is not sponsored, endorsed, or administered by Apple Inc. iMac is a trademark of Apple Inc.</p><p>&copy; 2026 Andrew Cho</p>';
+  }
+})();
+(function () {
   var form = document.getElementById('entryForm');
   var statusEl = document.getElementById('status');
   var btn = document.getElementById('submitBtn');
@@ -311,6 +339,7 @@
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
+    if (new Date() >= new Date('2026-12-01T00:00:00-07:00')) { location.reload(); return; }
     statusEl.className = 'status';
     if (!validate()) {
       var firstBad = form.querySelector('.invalid');
